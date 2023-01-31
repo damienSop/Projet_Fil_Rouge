@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: odoo-web 
+  namespace: icgroup
+  labels:
+    app: odoo
+    env: prod
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: odoo
+      env: prod 
+  template:
+    metadata:
+      labels:
+        app: odoo
+        env: prod
+    spec:
+      containers:
+      - name: odoo-web
+        image: odoo:16.0 
+        env:
+        - name: HOST
+          value: db-odoo-svc
+        - name: USER
+          value: odoo 
+        - name: PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-database 
+              key: postgresql_password
+        ports:
+        - name: odoo-port
+          containerPort: 8069 
+        volumeMounts:
+        - name: odoo-web-data
+          mountPath: /var/lib/odoo
+
+      volumes:
+        - name: odoo-web-data
+          hostPath:
+            path: /data/odoo-web-data 

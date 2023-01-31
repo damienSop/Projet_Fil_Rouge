@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: BDD-Odoo
+  namespace: icgroup
+  labels:
+    app: odoo
+    env: prod 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: odoo
+      env: prod
+  template:
+    metadata:
+      labels:
+        app: odoo
+        env: prod
+    spec:
+      containers:
+      - name: db-postgresql
+        image: postgres:15 
+        volumeMounts:
+          - name: odoo-db-data
+            mountPath: /var/lib/postgresql/data/pgdata
+        ports:
+        - name: db-port
+          containerPort: 5432
+        env:
+          - name: POSTGRES_DB
+            value: postgres
+          - name: POSTGRES_USER
+            value: odoo
+          - name: PGDATA
+            value: /var/lib/postgresql/data/pgdata  
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: secret-database 
+                key: postgresql_password
+        resources:
+          limits:
+            memory: 1Gi
+            cpu: "2"
+            
+      #Volumes
+      volumes:
+        - name: odoo-db-data
+          hostPath:
+            path: /data/postgresql-data 
