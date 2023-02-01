@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name:  postgres 
+  name: postgres 
   namespace: icgroup
   labels:
-    app: odoo
+    app: postgres 
     env: prod 
 spec:
   type: ClusterIP
   selector:
-    app: odoo
+    app: postgres
     env: prod
   ports:
-  - protocol:  TCP
-    port:  5432
+  - protocol: TCP
+    port: 5432
     targetPort: 5432

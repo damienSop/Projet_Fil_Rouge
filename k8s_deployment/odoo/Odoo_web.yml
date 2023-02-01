@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: odoo-web 
+  name: odoo 
   namespace: icgroup
   labels:
     app: odoo
@@ -19,20 +19,20 @@ spec:
         env: prod
     spec:
       containers:
-      - name: odoo-web
+      - name: odoo
         image: odoo 
         env:
         - name: HOST
           value: postgres 
         - name: USER
-          value: odoo 
+          value: toto 
         - name: PASSWORD
           valueFrom:
             secretKeyRef:
-              name: secret-database 
-              key: postgresql_password
+              name: odoo 
+              key: PASSWORD 
         ports:
-        - name: odoo-port
+        - name: odoo
           containerPort: 8069 
         volumeMounts:
         - name: odoo-web-data

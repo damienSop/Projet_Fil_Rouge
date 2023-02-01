@@ -4,22 +4,22 @@ metadata:
   name: postgres 
   namespace: icgroup
   labels:
-    app: odoo
+    app: postgres 
     env: prod 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: odoo
+      app: postgres 
       env: prod
   template:
     metadata:
       labels:
-        app: odoo
+        app: postgres 
         env: prod
     spec:
       containers:
-      - name: db-postgresql
+      - name: postgres 
         image: postgres:10 
         volumeMounts:
           - name: odoo-db-data
@@ -31,14 +31,12 @@ spec:
           - name: POSTGRES_DB
             value: postgres
           - name: POSTGRES_USER
-            value: odoo
-          - name: PGDATA
-            value: /var/lib/postgresql/data/pgdata  
+            value: toto
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: secret-database 
-                key: postgresql_password
+                name: postgres  
+                key: POSTGRES_PASSWORD
         resources:
           limits:
             memory: 2Gi
