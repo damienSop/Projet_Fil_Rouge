@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: BDD-Odoo
+  name: bdd-odoo
   namespace: icgroup
   labels:
     app: odoo

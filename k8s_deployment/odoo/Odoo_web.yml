@@ -20,10 +20,10 @@ spec:
     spec:
       containers:
       - name: odoo-web
-        image: odoo:16.0 
+        image: odoo 
         env:
         - name: HOST
-          value: db-odoo-svc
+          value: odoo-db-svc
         - name: USER
           value: odoo 
         - name: PASSWORD
@@ -37,8 +37,18 @@ spec:
         volumeMounts:
         - name: odoo-web-data
           mountPath: /var/lib/odoo
+        - name: odoo-persistent-storage
+          mountPath: /etc/odoo
+        - name: extra-addons-persistent-storage
+          mountPath: /mnt/extra-addons
 
       volumes:
         - name: odoo-web-data
           hostPath:
             path: /data/odoo-web-data 
+        - name: odoo-persistent-storage
+          hostPath:
+            path: /data/config
+        - name: extra-addons-persistent-storage
+          hostPath:
+            path: /data/addons
