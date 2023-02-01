@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name:  odoo-db-svc
+  name:  postgres 
   namespace: icgroup
   labels:
     app: odoo

@@ -7,7 +7,7 @@ metadata:
     app: odoo
     env: prod
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: odoo
@@ -23,7 +23,7 @@ spec:
         image: odoo 
         env:
         - name: HOST
-          value: odoo-db-svc
+          value: postgres 
         - name: USER
           value: odoo 
         - name: PASSWORD
@@ -45,10 +45,10 @@ spec:
       volumes:
         - name: odoo-web-data
           hostPath:
-            path: /data/odoo-web-data 
+            path: /data/odoo-web-data/ 
         - name: odoo-persistent-storage
           hostPath:
-            path: /data/config
+            path: /data/config/
         - name: extra-addons-persistent-storage
           hostPath:
-            path: /data/addons
+            path: /data/addons/

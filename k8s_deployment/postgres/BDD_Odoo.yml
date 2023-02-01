@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bdd-odoo
+  name: postgres 
   namespace: icgroup
   labels:
     app: odoo
@@ -20,10 +20,10 @@ spec:
     spec:
       containers:
       - name: db-postgresql
-        image: postgres:15 
+        image: postgres:10 
         volumeMounts:
           - name: odoo-db-data
-            mountPath: /var/lib/postgresql/data/pgdata
+            mountPath: /var/lib/postgresql/data
         ports:
         - name: db-port
           containerPort: 5432
@@ -41,7 +41,7 @@ spec:
                 key: postgresql_password
         resources:
           limits:
-            memory: 1Gi
+            memory: 2Gi
             cpu: "2"
             
       #Volumes
